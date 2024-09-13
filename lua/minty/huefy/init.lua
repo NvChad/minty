@@ -43,7 +43,7 @@ M.open = function()
     relative = "cursor",
     style = "minimal",
     border = { "┏", "━", "┓", "┃", "┛", "━", "┗", "┃" },
-    title = {{" 󱥚  Color picker ", "ExHovered"}},
+    title = {{" 󱥚  Color picker ", "ExBlack3bg"}},
     title_pos = "center",
   })
 
