@@ -139,7 +139,7 @@ end
 
 local save_color = {
   click = function()
-    api.nvim_feedkeys("q", "x", false)
+    require("volt").close()
     local line = api.nvim_get_current_line()
     line = line:gsub(v.hex, v.new_hex)
     api.nvim_set_current_line(line)
