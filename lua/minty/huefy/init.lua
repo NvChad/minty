@@ -102,15 +102,10 @@ M.open = function()
   extmarks.mappings {
     bufs = { v.palette_buf, input_buf, v.tools_buf },
     inputbuf = input_buf,
-    close_func_post = function()
+    after_close= function()
       api.nvim_set_current_win(oldwin)
     end,
   }
-end
-
-M.toggle = function()
-  extmarks.toggle_func(M.open, v.visible)
-  v.visible = not v.visible
 end
 
 return M
