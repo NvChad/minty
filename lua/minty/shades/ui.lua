@@ -195,7 +195,7 @@ M.footer = function()
       gen_padding(6),
       { "└" .. string.rep("─", 8) .. "┘", borderhl, save_color },
     },
-    {},
+    (v.config.border and {} or nil),
   }
 
   return results

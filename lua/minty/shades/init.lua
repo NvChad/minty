@@ -10,7 +10,8 @@ local extmarks_events = require "volt.events"
 
 v.ns = api.nvim_create_namespace "NvShades"
 
-M.open = function()
+M.open = function(opts)
+  v.config = vim.tbl_deep_extend("force", v.config, opts or {})
   local oldwin = api.nvim_get_current_win()
 
   v.hex = utils.hex_on_cursor() or "61afef"
@@ -37,7 +38,7 @@ M.open = function()
     title_pos = "center",
   })
 
-  api.nvim_open_win(input_buf, true, {
+  local input_win = api.nvim_open_win(input_buf, true, {
     row = h + 1,
     col = -1,
     width = v.w,
@@ -52,6 +53,12 @@ M.open = function()
 
   api.nvim_win_set_hl_ns(win, v.ns)
   api.nvim_set_hl(v.ns, "FloatBorder", { link = "LineNr" })
+
+  if not v.config.border then
+    api.nvim_set_hl(v.ns, "FloatBorder", { link = "ExBlack2border" })
+    api.nvim_set_hl(v.ns, "Normal", { link = "ExBlack2Bg" })
+    vim.wo[input_win].winhl = "Normal:ExBlack3Bg,FloatBorder:ExBlack3border"
+  end
 
   api.nvim_set_current_win(win)
 
