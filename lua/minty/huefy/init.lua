@@ -15,8 +15,14 @@ v.paletteNS = api.nvim_create_namespace "Huefy"
 v.inputNS = api.nvim_create_namespace "HuefyInput"
 v.toolsNS = api.nvim_create_namespace "HuefyTools"
 
-M.open = function()
+M.open = function(opts)
   local oldwin = api.nvim_get_current_win()
+
+  v.config = vim.tbl_deep_extend("force", v.config, opts or {})
+  local border = v.config.border
+  v.xpad = border and 2 or 1
+
+  v.gen_w()
 
   v.hex = utils.hex_on_cursor() or "61afef"
   v.new_hex = v.hex
@@ -42,16 +48,16 @@ M.open = function()
     height = h,
     relative = "cursor",
     style = "minimal",
-    border = { "┏", "━", "┓", "┃", "┛", "━", "┗", "┃" },
-    title = {{" 󱥚  Color picker ", "ExBlack3bg"}},
+    border = "single",
+    title = { { " 󱥚  Color picker ", border and "lazyh1" or "ExBlack3bg" } },
     title_pos = "center",
   })
 
-  local tools_h = h - 4
+  local tools_h = h - (border and 3 or 4)
 
   local input_win = api.nvim_open_win(input_buf, true, {
     row = -1,
-    col = 3 + v.w,
+    col = (border and 2 or 3) + v.w,
     width = v.w,
     height = 1,
     relative = "win",
@@ -61,12 +67,12 @@ M.open = function()
   })
 
   local tools_win = api.nvim_open_win(v.tools_buf, true, {
-    row = 3,
-    col = v.w + 3,
+    row = (border and 2 or 3),
+    col = -1,
     width = v.tools_w,
     height = tools_h,
     relative = "win",
-    win = win,
+    win = input_win,
     style = "minimal",
     border = "single",
   })
@@ -75,12 +81,17 @@ M.open = function()
   api.nvim_win_set_hl_ns(input_win, v.inputNS)
   api.nvim_win_set_hl_ns(tools_win, v.toolsNS)
 
-  api.nvim_set_hl(v.paletteNS, "FloatBorder", { link = "ExDarkBorder" })
-  api.nvim_set_hl(v.paletteNS, "Normal", { link = "ExDarkBg" })
-  api.nvim_set_hl(v.inputNS, "FloatBorder", { link = "ExBlack2border" })
-  api.nvim_set_hl(v.inputNS, "Normal", { link = "ExBlack2Bg" })
-  api.nvim_set_hl(v.toolsNS, "FloatBorder", { link = "Exblack2border" })
-  api.nvim_set_hl(v.toolsNS, "Normal", { link = "ExBlack2Bg" })
+  if border then
+    api.nvim_set_hl(v.paletteNS, "FloatBorder", { link = "Comment" })
+    api.nvim_set_hl(v.toolsNS, "FloatBorder", { link = "Comment" })
+  else
+    api.nvim_set_hl(v.paletteNS, "FloatBorder", { link = "ExDarkBorder" })
+    api.nvim_set_hl(v.paletteNS, "Normal", { link = "ExDarkBg" })
+    api.nvim_set_hl(v.inputNS, "FloatBorder", { link = "ExBlack2border" })
+    api.nvim_set_hl(v.inputNS, "Normal", { link = "ExBlack2Bg" })
+    api.nvim_set_hl(v.toolsNS, "FloatBorder", { link = "Exblack2border" })
+    api.nvim_set_hl(v.toolsNS, "Normal", { link = "ExBlack2Bg" })
+  end
 
   api.nvim_set_current_win(win)
   api.nvim_buf_set_lines(input_buf, 0, -1, false, { "   Enter color : #" .. v.hex })
@@ -102,7 +113,7 @@ M.open = function()
   extmarks.mappings {
     bufs = { v.palette_buf, input_buf, v.tools_buf },
     inputbuf = input_buf,
-    after_close= function()
+    after_close = function()
       api.nvim_set_current_win(oldwin)
     end,
   }

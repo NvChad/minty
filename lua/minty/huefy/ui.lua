@@ -11,8 +11,6 @@ local g = vim.g
 
 local M = {}
 
-local separator = { { string.rep("-", v.w_with_pad), "LineNr" } }
-
 local redraw_all = function()
   redraw(v.tools_buf, "all")
   redraw(v.palette_buf, "all")
@@ -64,6 +62,7 @@ M.palettes = function()
 end
 
 M.hue = function()
+local separator = { { string.rep("-", v.w_with_pad), "LineNr" } }
   local result = {}
 
   for i = 1, 36, 1 do
@@ -175,6 +174,7 @@ M.footer = function()
       gen_padding(6),
       { "└" .. string.rep("─", 8) .. "┘", borderhl, save_color },
     },
+    v.config.border and {} or nil,
   }
 
   return results
@@ -184,7 +184,7 @@ end
 
 M.rgb_slider = function()
   local rgb = v.sliders
-  local lines = {}
+  local lines = { v.config.border and {} or nil }
   local sliders_info = { { "r", "Red" }, { "g", "Green" }, { "b", "Blue" } }
 
   for _, val in ipairs(sliders_info) do
@@ -297,6 +297,7 @@ M.lightness_slider = function()
 end
 
 M.suggested_colors = function()
+  local separator = { { string.rep("-", v.w_with_pad), "LineNr" } }
   local qty = 36
   local colors = hex2complementary(v.new_hex, qty)
 
@@ -341,6 +342,8 @@ M.suggested_colors = function()
 
     line1,
     line2,
+
+    v.config.border and {} or nil,
   }
 end
 

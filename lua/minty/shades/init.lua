@@ -52,9 +52,10 @@ M.open = function(opts)
   api.nvim_buf_set_lines(input_buf, 0, -1, false, { "   Enter color : #" .. v.hex })
 
   api.nvim_win_set_hl_ns(win, v.ns)
-  api.nvim_set_hl(v.ns, "FloatBorder", { link = "LineNr" })
 
-  if not v.config.border then
+  if v.config.border then
+    api.nvim_set_hl(v.ns, "FloatBorder", { link = "LineNr" })
+  else
     api.nvim_set_hl(v.ns, "FloatBorder", { link = "ExBlack2border" })
     api.nvim_set_hl(v.ns, "Normal", { link = "ExBlack2Bg" })
     vim.wo[input_win].winhl = "Normal:ExBlack3Bg,FloatBorder:ExBlack3border"
