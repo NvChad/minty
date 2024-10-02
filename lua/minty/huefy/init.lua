@@ -39,9 +39,20 @@ M.open = function(opts)
 
   local h = mark_state[v.palette_buf].h
 
+  -- handle fallback col | if less space is there for window
+  local cur_pos = api.nvim_win_get_cursor(0)
+  local win_w = api.nvim_win_get_width(0)
+  local total_w = (v.w * 2) + 10
+  local fallback_col
+
+  if win_w - cur_pos[2] < total_w then
+    local kekw = win_w - cur_pos[2] - total_w
+    fallback_col = -(cur_pos[1] - kekw)
+  end
+
   local win = api.nvim_open_win(v.palette_buf, true, {
     row = 1,
-    col = 1,
+    col = fallback_col or 1,
     -- row = (vim.o.lines / 2) / 2,
     -- col = vim.o.columns / 5,
     width = v.w,
