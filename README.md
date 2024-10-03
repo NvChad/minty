@@ -3,7 +3,7 @@
 Beautifully crafted color tools for Neovim
  
 ![shades](https://github.com/user-attachments/assets/d499748b-d9c8-4a92-89ba-bfce1814c275)
-![huefy](https://github.com/user-attachments/assets/504ba2a1-9d83-492c-9913-f0e159ef9ad8)
+![huefy](https://github.com/user-attachments/assets/21f2c23d-94c6-4ccf-a0d0-ddf91f6bb5c1)
 
 ## Install
 
