@@ -10,10 +10,6 @@ Beautifully crafted color tools for Neovim
 ```lua
 { "nvchad/volt", lazy = true },
 { "nvchad/minty", lazy = true }
-
--- or users that have lazy=true by default :D
-"nvchad/volt",
-"nvchad/minty"
 ```
 
 ## Usage
