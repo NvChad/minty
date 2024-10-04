@@ -34,7 +34,7 @@ M.open = function(opts)
     relative = "cursor",
     style = "minimal",
     border = { "┏", "━", "┓", "┃", "┛", "━", "┗", "┃" },
-    title = " 󱥚 Color Shades ",
+    title = { { " 󱥚 Color Shades ", "ExBlack3bg" } },
     title_pos = "center",
   })
 
@@ -55,6 +55,8 @@ M.open = function(opts)
 
   if v.config.border then
     api.nvim_set_hl(v.ns, "FloatBorder", { link = "LineNr" })
+    api.nvim_set_hl(v.ns, "Normal", { bg = "none" })
+    vim.wo[input_win].winhl = "FloatBorder:ExBlue,Normal:Normal"
   else
     api.nvim_set_hl(v.ns, "FloatBorder", { link = "ExBlack2border" })
     api.nvim_set_hl(v.ns, "Normal", { link = "ExBlack2Bg" })

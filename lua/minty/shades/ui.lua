@@ -127,7 +127,7 @@ M.intensity = function()
     ui.slider.config {
       w = v.w_with_pad,
       val = v.intensity,
-      hlon = "NvimInternalError",
+      hlon = "ExRed",
       ratio_txt = false,
       actions = function()
         v.intensity = ui.slider.val(v.w_with_pad, nil, v.xpad)
