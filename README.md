@@ -22,7 +22,12 @@ require("minty.shades").open()
 require("minty.huefy").open( { border = true } )
 -- add border=false for flat look on shades window
 ```
-## Mappings
+
+Do check the [demo video](https://www.youtube.com/watch?v=NHC4jLoR_zI) to get an overview!
+
+## Mappings ( useful for no-mouse users)
 
 - `<Ctrl> + t` : cycle through windows
 - `<Tab>` or `<S-Tab>` : cycle through clickables in current window
+- `<CR>` i.e enter to click on the area
+- moving cursor with `h` or `l` in slider 
