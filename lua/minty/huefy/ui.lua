@@ -7,6 +7,7 @@ local rgb2hex = require("volt.color").rgb2hex
 local change_saturation = require("volt.color").change_hex_saturation
 local ui = require "volt.ui"
 local hex2complementary = require("volt.color").hex2complementary
+local config = require("minty").config.huefy
 local g = vim.g
 
 local M = {}
@@ -174,7 +175,7 @@ M.footer = function()
       gen_padding(6),
       { "└" .. string.rep("─", 8) .. "┘", borderhl, save_color },
     },
-    v.config.border and {} or nil,
+    config.border and {} or nil,
   }
 
   return results
@@ -184,7 +185,7 @@ end
 
 M.rgb_slider = function()
   local rgb = v.sliders
-  local lines = { v.config.border and {} or nil }
+  local lines = { config.border and {} or nil }
   local sliders_info = { { "r", "Red" }, { "g", "Green" }, { "b", "Blue" } }
 
   for _, val in ipairs(sliders_info) do
@@ -343,7 +344,7 @@ M.suggested_colors = function()
     line1,
     line2,
 
-    v.config.border and {} or nil,
+    config.border and {} or nil,
   }
 end
 

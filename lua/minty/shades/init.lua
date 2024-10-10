@@ -7,11 +7,11 @@ local redraw = require("volt").redraw
 local layout = require "minty.shades.layout"
 local extmarks = require "volt"
 local extmarks_events = require "volt.events"
+local config = require("minty").config.shades
 
 v.ns = api.nvim_create_namespace "NvShades"
 
-M.open = function(opts)
-  v.config = vim.tbl_deep_extend("force", v.config, opts or {})
+M.open = function()
   local oldwin = api.nvim_get_current_win()
 
   v.hex = utils.hex_on_cursor() or "61afef"
@@ -53,7 +53,7 @@ M.open = function(opts)
 
   api.nvim_win_set_hl_ns(win, v.ns)
 
-  if v.config.border then
+  if config.border then
     api.nvim_set_hl(v.ns, "FloatBorder", { link = "LineNr" })
     api.nvim_set_hl(v.ns, "Normal", { bg = "none" })
     vim.wo[input_win].winhl = "FloatBorder:ExBlue,Normal:Normal"

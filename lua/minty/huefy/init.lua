@@ -15,11 +15,12 @@ v.paletteNS = api.nvim_create_namespace "Huefy"
 v.inputNS = api.nvim_create_namespace "HuefyInput"
 v.toolsNS = api.nvim_create_namespace "HuefyTools"
 
-M.open = function(opts)
+M.open = function()
   local oldwin = api.nvim_get_current_win()
+  local config = require("minty").config.huefy
 
-  v.config = vim.tbl_deep_extend("force", v.config, opts or {})
-  local border = v.config.border
+
+  local border = config.border
   v.xpad = border and 2 or 1
 
   v.gen_w()

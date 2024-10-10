@@ -2,6 +2,7 @@ local api = vim.api
 local v = require "minty.shades.state"
 local redraw = require("volt").redraw
 local ui = require "volt.ui"
+local config = require("minty").config.shades
 local g = vim.g
 
 local M = {}
@@ -195,7 +196,7 @@ M.footer = function()
       gen_padding(6),
       { "└" .. string.rep("─", 8) .. "┘", borderhl, save_color },
     },
-    (v.config.border and {} or nil),
+    (config.border and {} or nil),
   }
 
   return results

@@ -9,18 +9,26 @@ Beautifully crafted color tools for Neovim
 
 ```lua
 { "nvchad/volt", lazy = true },
-{ "nvchad/minty", lazy = true }
-```
 
+{
+  "nvchad/minty",
+  cmd = { "Shades", "Huefy" },
+}
+
+```
 ## Usage
 
-```lua
-require("minty.huefy").open()
-require("minty.shades").open()
+`Shades`, `Huefy` are the commands.
 
--- For border or without border
-require("minty.huefy").open( { border = true } )
--- add border=false for flat look on shades window
+- Check [config table](https://github.com/NvChad/minty/blob/main/lua/minty/init.lua#L3)
+- Example opts config
+
+```lua
+{
+  "nvchad/minty",
+  cmd = { "Shades", "Huefy" },
+  opts = { huefy = { border = false } }
+}
 ```
 
 Do check the [demo video](https://www.youtube.com/watch?v=NHC4jLoR_zI) to get an overview!
