@@ -8,8 +8,11 @@ local redraw = require("volt").redraw
 local layout = require "minty.huefy.layout"
 local hex2rgb_ratio = require("volt.color").hex2rgb_ratio
 
-local extmarks = require "volt"
-local extmarks_events = require "volt.events"
+local volt = require "volt"
+local volt_events = require "volt.events"
+
+local map = vim.keymap.set
+local huefyapi = require "minty.huefy.api"
 
 v.paletteNS = api.nvim_create_namespace "Huefy"
 v.inputNS = api.nvim_create_namespace "HuefyInput"
@@ -18,7 +21,6 @@ v.toolsNS = api.nvim_create_namespace "HuefyTools"
 M.open = function()
   local oldwin = api.nvim_get_current_win()
   local config = require("minty").config.huefy
-
 
   local border = config.border
   v.xpad = border and 2 or 1
@@ -33,7 +35,7 @@ M.open = function()
   v.tools_buf = api.nvim_create_buf(false, true)
   local input_buf = api.nvim_create_buf(false, true)
 
-  extmarks.gen_data {
+  volt.gen_data {
     { buf = v.palette_buf, layout = layout.palette, xpad = v.xpad, ns = v.paletteNS },
     { buf = v.tools_buf, layout = layout.tools, xpad = v.xpad, ns = v.paletteNS },
   }
@@ -108,9 +110,9 @@ M.open = function()
   api.nvim_set_current_win(win)
   api.nvim_buf_set_lines(input_buf, 0, -1, false, { "   Enter color : #" .. v.hex })
 
-  extmarks.run(v.palette_buf, { h = h, w = v.w })
-  extmarks.run(v.tools_buf, { h = tools_h, w = v.w })
-  extmarks_events.add { v.palette_buf, v.tools_buf }
+  volt.run(v.palette_buf, { h = h, w = v.w })
+  volt.run(v.tools_buf, { h = tools_h, w = v.w })
+  volt_events.add { v.palette_buf, v.tools_buf }
 
   ----------------- keymaps --------------------------
   -- redraw some sections on <cr>
@@ -122,13 +124,20 @@ M.open = function()
     redraw(v.tools_buf, "all")
   end, { buffer = input_buf })
 
-  extmarks.mappings {
+  volt.mappings {
     bufs = { v.palette_buf, input_buf, v.tools_buf },
     inputbuf = input_buf,
     after_close = function()
       api.nvim_set_current_win(oldwin)
     end,
   }
+
+  map("n", "<C-s>", huefyapi.save_color, { buffer = v.palette_buf })
+  map("n", "<C-s>", huefyapi.save_color, { buffer = v.tools_buf })
+
+  if config.mappings then
+    config.mappings { v.palette_buf, v.tools_buf }
+  end
 end
 
 return M

@@ -8,6 +8,7 @@ local change_saturation = require("volt.color").change_hex_saturation
 local ui = require "volt.ui"
 local hex2complementary = require("volt.color").hex2complementary
 local config = require("minty").config.huefy
+local huefyapi = require "minty.huefy.api"
 local g = vim.g
 
 local M = {}
@@ -63,7 +64,7 @@ M.palettes = function()
 end
 
 M.hue = function()
-local separator = { { string.rep("-", v.w_with_pad), "LineNr" } }
+  local separator = { { string.rep("-", v.w_with_pad), "LineNr" } }
   local result = {}
 
   for i = 1, 36, 1 do
@@ -118,13 +119,7 @@ local separator = { { string.rep("-", v.w_with_pad), "LineNr" } }
 end
 
 local save_color = {
-  click = function()
-    require("volt").close()
-    local line = api.nvim_get_current_line()
-    line = line:gsub(v.hex, v.new_hex)
-    api.nvim_set_current_line(line)
-  end,
-
+  click = huefyapi.save_color,
   hover = { id = "saved_color", redraw = "footer" },
 }
 
