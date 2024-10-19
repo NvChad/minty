@@ -3,6 +3,7 @@ local v = require "minty.shades.state"
 local redraw = require("volt").redraw
 local ui = require "volt.ui"
 local config = require("minty").config.shades
+local shadesapi  = require("minty.shades.api")
 local g = vim.g
 
 local M = {}
@@ -139,13 +140,7 @@ M.intensity = function()
 end
 
 local save_color = {
-  click = function()
-    require("volt").close()
-    local line = api.nvim_get_current_line()
-    line = line:gsub(v.hex, v.new_hex)
-    api.nvim_set_current_line(line)
-  end,
-
+  click = shadesapi.save_color,
   hover = { id = "savedcolor", redraw = "footer" },
 }
 

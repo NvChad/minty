@@ -5,9 +5,10 @@ local v = require "minty.shades.state"
 local mark_state = require "volt.state"
 local redraw = require("volt").redraw
 local layout = require "minty.shades.layout"
-local extmarks = require "volt"
-local extmarks_events = require "volt.events"
+local volt = require "volt"
 local config = require("minty").config.shades
+local shadesapi = require "minty.shades.api"
+local map = vim.keymap.set
 
 v.ns = api.nvim_create_namespace "NvShades"
 
@@ -20,7 +21,7 @@ M.open = function()
 
   local input_buf = api.nvim_create_buf(false, true)
 
-  extmarks.gen_data {
+  volt.gen_data {
     { buf = v.buf, layout = layout, xpad = v.xpad, ns = v.ns },
   }
 
@@ -65,8 +66,8 @@ M.open = function()
 
   api.nvim_set_current_win(win)
 
-  extmarks.run(v.buf, { h = h, w = v.w })
-  extmarks_events.add(v.buf)
+  volt.run(v.buf, { h = h, w = v.w })
+  require("volt.events").add(v.buf)
 
   ----------------- keymaps --------------------------
   -- redraw some sections on <cr>
@@ -77,13 +78,19 @@ M.open = function()
     redraw(v.buf, { "palettes", "footer" })
   end, { buffer = input_buf })
 
-  extmarks.mappings {
+  volt.mappings {
     bufs = { v.buf, input_buf },
     input_buf = input_buf,
     after_close = function()
       api.nvim_set_current_win(oldwin)
     end,
   }
+
+  map("n", "<C-s>", shadesapi.save_color, { buffer = v.buf })
+
+  if config.mappings then
+    config.mappings(v.buf)
+  end
 end
 
 return M
