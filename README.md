@@ -16,26 +16,10 @@ Beautifully crafted color tools for Neovim
 }
 
 ```
-## Usage
 
-`Shades`, `Huefy` are the commands.
+## Docs
 
-- Check [config table](https://github.com/NvChad/minty/blob/main/lua/minty/init.lua#L3)
-- Example opts config
-
-```lua
-{
-  "nvchad/minty",
-  cmd = { "Shades", "Huefy" },
-  opts = { huefy = { border = false } }
-}
-```
+- Read `:h minty`
+- `Shades`, `Huefy` are the commands.
 
 Do check the [demo video](https://www.youtube.com/watch?v=NHC4jLoR_zI) to get an overview!
-
-## Mappings ( useful for no-mouse users)
-
-- `<Ctrl> + t` : cycle through windows
-- `<Tab>` or `<S-Tab>` : cycle through clickables in current window
-- `<CR>` i.e enter to click on the area
-- moving cursor with `h` or `l` in slider 

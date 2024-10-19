@@ -1,0 +1,102 @@
+*minty* Docs for NvChad's base46 and UI
+
+                           `  ▄▄         ▄ ▄▄▄▄▄▄▄  `
+                           `▄▀███▄     ▄██ █████▀ `
+                           `██▄▀███▄   ███        `
+                           `███  ▀███▄ ███        `
+                           `███    ▀██ ███        `
+                           `███      ▀ ███        `
+                           `▀██ █████▄▀█▀▄██████▄ `
+                           `  ▀ ▀▀▀▀▀▀▀ ▀▀▀▀▀▀▀▀▀▀`
+
+==============================================================================
+CONTENTS                                                      *minty.contents* 
+ 
+ 1. `Install`                                                   |minty.install|
+ 2. `Default Options`                                           |minty.options|
+ 3. `Usage`                                                     |minty.usage|
+
+ 4. `Huefy`                                                     |minty.huefy|
+    4.1 `Api`                                                   |minty.huefy.api|
+
+ 5. `Shades`                                                    |minty.shades|
+    5.1 `Api`                                                   |minty.shades.api|
+
+==============================================================================
+1. Install                                                       *minty.install*
+
+- Minty is a neovim plugin with collection of color related tools.
+- Its made with Volt UI library.
+
+>lua
+ { "nvchad/volt", lazy = true },
+
+ {
+  "nvchad/minty",
+   cmd = { "Shades", "Huefy" },
+ }
+<
+==============================================================================
+2. Default Options                                               *minty.options*
+>lua
+ {
+   huefy = { 
+     border = false
+     mappings = function(bufs) -- bufs is a table cuz 2 bufs!
+        -- add your mappings here ( buffer scoped )
+     end
+   },
+
+  shades = {
+    border = true,
+    mappings = function(buf) 
+      -- add your mappings here ( buffer scoped )
+      -- local api = require("minty.shades.api")
+      -- vim.keymap.set("n", "s", api.save_color, { buffer = buf })
+    end
+    },
+ }
+<
+==============================================================================
+3. Usage                                                           *minty.usage*
+
+- For mouse users, its easy to click & hover
+
+NOTE: For keyboard users, these are the mappings:
+
+<Ctrl> + t : cycle through windows
+<Tab> or <S-Tab> : cycle through clickables in current window
+<CR> i.e enter to click on the area
+moving cursor with h or l in slider
+
+==============================================================================
+4. Huefy                                                           *minty.huefy*
+
+Command : `Huefy`
+
+------------------------------------------------------------------------------
+4.1 Api                                                        *minty.huefy.api*
+
+`Save color `
+>lua
+ require("minty.huefy").save_color()
+<
+`Open :`
+>lua
+ require("minty.huefy").open()
+<
+==============================================================================
+5. Shade                                                          *minty.shades*
+
+Command : `Shades`
+
+------------------------------------------------------------------------------
+5.1 Api                                                       *minty.shades.api*
+
+`Save color `
+>lua
+ require("minty.shades").save_color()
+<
+`Open :`
+>lua
+ require("minty.shades").open()
