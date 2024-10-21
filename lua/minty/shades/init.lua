@@ -28,11 +28,11 @@ M.open = function()
   local h = mark_state[v.buf].h
 
   local win = api.nvim_open_win(v.buf, true, {
-    row = 1,
-    col = 0,
+    row = config.position and config.position.row or 1,
+    col = config.position and config.position.col or 0,
     width = v.w,
     height = h,
-    relative = "cursor",
+    relative = config.relative and config.relative or "cursor",
     style = "minimal",
     border = { "┏", "━", "┓", "┃", "┛", "━", "┗", "┃" },
     title = { { " 󱥚 Color Shades ", "ExBlack3bg" } },
