@@ -45,6 +45,17 @@ CONTENTS                                                      *minty.contents*
      mappings = function(bufs) -- bufs is a table cuz 2 bufs!
         -- add your mappings here ( buffer scoped )
      end
+
+     -- You can pass these fields in your personal configuration
+     -- to customize where the window will show.
+     -- See `:h nvim_open_win()` for how to configure these options
+     -- Not all options are supported, only the ones below
+
+     -- relative = "editor",
+     -- position = {
+     --   row = 5,
+     --   col = 20,
+     -- },
    },
 
   shades = {
@@ -53,6 +64,17 @@ CONTENTS                                                      *minty.contents*
       -- add your mappings here ( buffer scoped )
       -- local api = require("minty.shades.api")
       -- vim.keymap.set("n", "s", api.save_color, { buffer = buf })
+
+      -- You can pass these fields in your personal configuration
+      -- to customize where the window will show.
+      -- See `:h nvim_open_win()` for how to configure these options
+      -- Not all options are supported, only the ones below
+
+      -- relative = "editor",
+      -- position = {
+      --   row = 5,
+      --   col = 20,
+      -- },
     end
     },
  }

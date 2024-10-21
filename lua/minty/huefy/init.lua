@@ -54,13 +54,13 @@ M.open = function()
   end
 
   local win = api.nvim_open_win(v.palette_buf, true, {
-    row = 1,
-    col = fallback_col or 1,
+    row = config.position and config.position.row or 1,
+    col = config.position and config.position.col or (fallback_col or 1),
     -- row = (vim.o.lines / 2) / 2,
     -- col = vim.o.columns / 5,
     width = v.w,
     height = h,
-    relative = "cursor",
+    relative = config.relative and config.relative or "cursor",
     style = "minimal",
     border = "single",
     title = { { " 󱥚  Color picker ", border and "lazyh1" or "ExBlack3bg" } },
