@@ -126,7 +126,7 @@ M.open = function()
 
   volt.mappings {
     bufs = { v.palette_buf, input_buf, v.tools_buf },
-    inputbuf = input_buf,
+    input_buf = input_buf,
     after_close = function()
       api.nvim_set_current_win(oldwin)
     end,
