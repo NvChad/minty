@@ -8,10 +8,10 @@ Beautifully crafted color tools for Neovim
 ## Install
 
 ```lua
-{ "nvchad/volt", lazy = true },
+{ "siduck/volt", lazy = true },
 
 {
-  "nvchad/minty",
+  "siduck/minty",
   cmd = { "Shades", "Huefy" },
 }
 
