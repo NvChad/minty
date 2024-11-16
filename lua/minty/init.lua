@@ -1,8 +1,8 @@
 local M = {}
 
 M.config = {
-  huefy = { border = false },
-  shades = { border = true },
+  huefy = { border = false, prompt = "   Enter color : " },
+  shades = { border = true, prompt = "   Enter color : " },
 }
 
 M.setup = function(opts)

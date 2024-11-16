@@ -20,6 +20,8 @@ M.open = function()
   v.buf = api.nvim_create_buf(false, true)
 
   local input_buf = api.nvim_create_buf(false, true)
+  vim.bo[input_buf].buftype = "prompt"
+  vim.fn.prompt_setprompt(input_buf, config.prompt)
 
   volt.gen_data {
     { buf = v.buf, layout = layout, xpad = v.xpad, ns = v.ns },
@@ -50,8 +52,6 @@ M.open = function()
     border = { "┏", "━", "┓", "┃", "┛", "━", "┗", "┃" },
   })
 
-  api.nvim_buf_set_lines(input_buf, 0, -1, false, { "   Enter color : #" .. v.hex })
-
   api.nvim_win_set_hl_ns(win, v.ns)
 
   if config.border then
@@ -64,23 +64,21 @@ M.open = function()
     vim.wo[input_win].winhl = "Normal:ExBlack3Bg,FloatBorder:ExBlack3border"
   end
 
-  api.nvim_set_current_win(win)
+  api.nvim_set_current_win(input_win)
+  vim.cmd "startinsert"
 
   volt.run(v.buf, { h = h, w = v.w })
   require("volt.events").add(v.buf)
 
-  ----------------- keymaps --------------------------
-  -- redraw some sections on <cr>
-  vim.keymap.set("i", "<cr>", function()
-    local cur_line = api.nvim_get_current_line()
-    v.hex = string.match(cur_line, "%w+$")
+  vim.fn.prompt_setcallback(input_buf, function(input)
+    v.hex = input:sub(2)
     v.new_hex = v.hex
     redraw(v.buf, { "palettes", "footer" })
-  end, { buffer = input_buf })
+  end)
 
+  ----------------- keymaps --------------------------
   volt.mappings {
     bufs = { v.buf, input_buf },
-    input_buf = input_buf,
     after_close = function()
       api.nvim_set_current_win(oldwin)
     end,

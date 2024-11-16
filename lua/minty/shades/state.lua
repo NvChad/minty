@@ -9,10 +9,6 @@ local M = {
   mode = "Variants",
   close = nil,
   visible = true,
-
-  config = {
-    border = true,
-  },
 }
 
 M.w = M.palette_cols * M.blocklen + (2 * M.xpad)

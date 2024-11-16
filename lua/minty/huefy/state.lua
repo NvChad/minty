@@ -18,8 +18,6 @@ local M = {
   lightness_mode = "light",
 
   visible = true,
-
-  config = { border = false },
 }
 
 M.gen_w = function()

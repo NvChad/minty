@@ -33,7 +33,10 @@ M.open = function()
 
   v.palette_buf = api.nvim_create_buf(false, true)
   v.tools_buf = api.nvim_create_buf(false, true)
+
   local input_buf = api.nvim_create_buf(false, true)
+  vim.bo[input_buf].buftype = "prompt"
+  vim.fn.prompt_setprompt(input_buf, config.prompt)
 
   volt.gen_data {
     { buf = v.palette_buf, layout = layout.palette, xpad = v.xpad, ns = v.paletteNS },
@@ -107,22 +110,19 @@ M.open = function()
     api.nvim_set_hl(v.toolsNS, "Normal", { link = "ExBlack2Bg" })
   end
 
-  api.nvim_set_current_win(win)
-  api.nvim_buf_set_lines(input_buf, 0, -1, false, { "   Enter color : #" .. v.hex })
+  api.nvim_set_current_win(input_win)
+  vim.cmd "startinsert"
 
   volt.run(v.palette_buf, { h = h, w = v.w })
   volt.run(v.tools_buf, { h = tools_h, w = v.w })
   volt_events.add { v.palette_buf, v.tools_buf }
 
-  ----------------- keymaps --------------------------
-  -- redraw some sections on <cr>
-  vim.keymap.set("i", "<cr>", function()
-    local cur_line = api.nvim_get_current_line()
-    v.hex = string.match(cur_line, "%w+$")
+  vim.fn.prompt_setcallback(input_buf, function(input)
+    v.hex = input:sub(2)
     v.set_hex("#" .. v.hex)
     redraw(v.palette_buf, "all")
     redraw(v.tools_buf, "all")
-  end, { buffer = input_buf })
+  end)
 
   volt.mappings {
     bufs = { v.palette_buf, input_buf, v.tools_buf },
