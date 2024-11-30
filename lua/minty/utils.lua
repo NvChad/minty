@@ -5,8 +5,8 @@ local lighten_hex = require("volt.color").change_hex_lightness
 M.hex_on_cursor = function()
   local hex = vim.fn.expand "<cword>"
 
-  if hex:match "^%x%x%x%x%x%x$" then
-    return hex
+  if hex:match "^#?%x%x%x%x%x%x$" then
+    return hex:gsub("#", "")
   end
 end
 
